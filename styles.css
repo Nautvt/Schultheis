@@ -1,0 +1,326 @@
+/* Schultheis Coiffures — concept. No build step, no framework. */
+
+:root {
+  --bg: #ffffff;
+  --soft: #f4f3f0;
+  --ink: #141414;
+  --ink-2: #3b3b3b;
+  --muted: #777674;
+  --grey: #8f9697;   /* het grijs van 'COIFFURES' in het logo */
+  --line: #e3e1dc;
+  --moss: #46512f;
+
+  --f-head: 'Bebas Neue', 'Oswald', 'Arial Narrow', sans-serif;
+  --f-body: 'Open Sans', system-ui, -apple-system, sans-serif;
+
+  --gut: clamp(20px, 4.5vw, 64px);
+  --max: 1240px;
+  --hdr-h: 68px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: var(--hdr-h); }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 16px/1.65 var(--f-body);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+h1, h2, h3 { margin: 0; font-weight: 400; }
+p { margin: 0 0 1em; }
+ul { margin: 0; padding: 0; list-style: none; }
+figure { margin: 0; }
+::selection { background: var(--ink); color: #fff; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.skip { position: fixed; left: 16px; top: -60px; z-index: 100; background: var(--ink); color: #fff; padding: 10px 16px; text-decoration: none; transition: top .2s; }
+.skip:focus { top: 16px; }
+
+.wrap { width: 100%; max-width: calc(var(--max) + 2 * var(--gut)); margin: 0 auto; padding: 0 var(--gut); }
+.sec { position: relative; padding: clamp(88px, 11vw, 160px) 0; overflow: clip; }
+.sec--soft { background: var(--soft); }
+
+h2 { font: 400 clamp(56px, 7vw, 104px)/.9 var(--f-head); letter-spacing: .005em; margin-bottom: 24px; }
+h3 { font: 600 12px/1.2 var(--f-body); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.cap { font: 600 12px/1.4 var(--f-body); letter-spacing: .18em; text-transform: uppercase; color: var(--grey); margin-bottom: 18px; }
+.small { font-size: 13px; color: var(--muted); margin-top: 28px; margin-bottom: 0; }
+
+.link { font-size: 14px; font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; transition: opacity .2s; }
+.link:hover { opacity: .55; }
+
+/* Het logo van de salon */
+.logo { display: block; flex: none; }
+.logo img { height: 20px; width: auto; }
+.logo--stacked img { height: 76px; }
+
+/* Grote letters, breder dan het scherm */
+.giant {
+  margin: 0; font-family: var(--f-head); font-weight: 400; text-transform: uppercase;
+  white-space: nowrap; line-height: .76; letter-spacing: -.005em; pointer-events: none;
+}
+.giant span { display: inline-block; will-change: transform; }
+
+/* knoppen */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 50px; padding: 0 26px;
+  background: var(--ink); color: #fff; border: 1px solid var(--ink);
+  font: 600 14px/1 var(--f-body); letter-spacing: .02em; text-decoration: none; white-space: nowrap;
+  transition: background-color .25s, color .25s, border-color .25s;
+}
+.btn:hover { background: #fff; color: var(--ink); }
+.btn--line { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn--line:hover { border-color: var(--ink); background: transparent; }
+.btn--sm { min-height: 40px; padding: 0 18px; font-size: 13px; }
+.btn--block { width: 100%; }
+
+/* header */
+.hdr {
+  position: fixed; inset: 0 0 auto; z-index: 50; background: rgba(255,255,255,.9);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent; transition: border-color .3s, transform .5s var(--ease);
+}
+.hdr.is-solid { border-color: var(--line); }
+.hdr.is-hidden { transform: translateY(-100%); }
+.hdr-in { max-width: calc(var(--max) + 2 * var(--gut)); margin: 0 auto; height: var(--hdr-h); padding: 0 var(--gut); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.hdr-nav { display: none; gap: 34px; }
+.hdr-nav a, .hdr-tel { font-size: 14px; text-decoration: none; color: var(--ink-2); }
+.hdr-nav a { position: relative; }
+.hdr-nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease); }
+.hdr-nav a:hover, .hdr-nav a.is-current { color: var(--ink); }
+.hdr-nav a:hover::after, .hdr-nav a.is-current::after { transform: scaleX(1); }
+.hdr-r { display: flex; align-items: center; gap: 24px; }
+.hdr-r .btn, .hdr-tel { display: none; }
+.burger { width: 44px; height: 44px; border: 0; background: none; display: grid; place-content: center; gap: 7px; padding: 0; margin-right: -10px; }
+.burger i { display: block; width: 22px; height: 1.5px; background: var(--ink); transition: transform .4s var(--ease); }
+.burger[aria-expanded="true"] i:first-child { transform: translateY(4.25px) rotate(45deg); }
+.burger[aria-expanded="true"] i:last-child { transform: translateY(-4.25px) rotate(-45deg); }
+
+.menu {
+  position: fixed; inset: 0; z-index: 45; background: #fff;
+  padding: calc(var(--hdr-h) + 12px) var(--gut) 28px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  opacity: 0; visibility: hidden; transition: opacity .35s, visibility 0s .35s;
+}
+.menu.is-open { opacity: 1; visibility: visible; transition: opacity .35s; }
+.menu-nav a { display: block; padding: 8px 0; border-bottom: 1px solid var(--line); font: 400 52px/1 var(--f-head); text-decoration: none; }
+.menu-foot { display: grid; gap: 18px; }
+.menu-foot p { margin: 0; font-size: 14px; color: var(--muted); }
+.menu-foot a:not(.btn) { color: var(--ink); text-decoration: none; }
+
+/* ---------- hero: het logowoord en direct de afspraakknop ---------- */
+.hero {
+  position: relative; overflow: clip; padding-top: var(--hdr-h);
+  display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "img" "word" "copy";
+}
+.hero-top { display: contents; }
+.hero-img {
+  grid-area: img; position: relative; z-index: 1; overflow: hidden; background: var(--soft);
+  height: min(56svh, 120vw);
+}
+.hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.giant--hero {
+  grid-area: word; position: relative; z-index: 2;
+  font-size: 37vw; margin: -18vw 0 0 1.5vw; padding-bottom: .04em; color: var(--ink);
+}
+.hero-copy { grid-area: copy; padding: 18px var(--gut) 28px; }
+.hero-copy .cap { display: none; }
+.hero-btns { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+.btn--lg { min-height: 58px; padding: 0 34px; font-size: 16px; flex: 1 1 100%; }
+
+/* in één oogopslag */
+.intro { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.intro-grid { display: grid; grid-template-columns: 1fr 1fr; margin: 0 auto; }
+.intro-grid > div { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.intro-grid > div:nth-child(odd) { padding-right: 16px; }
+.intro-grid > div:nth-last-child(-n+2) { border-bottom: 0; }
+.intro dt { font: 600 11px/1.2 var(--f-body); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.intro dd { margin: 0; font-size: 15px; line-height: 1.45; }
+.intro dd a { text-decoration: none; }
+.intro dd a:hover { text-decoration: underline; }
+
+.status { display: inline-flex; align-items: center; gap: 8px; }
+.status i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+.status[data-open="true"] i { background: #4f8a4b; }
+
+/* intro */
+.js .fade { opacity: 0; transform: translateY(14px); }
+.js .hero-img img { opacity: 0; transform: scale(1.06); }
+.js .giant--hero { opacity: 0; transform: translateY(6%); }
+.is-loaded .fade { opacity: 1; transform: none; transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.is-loaded .fade:nth-child(2) { transition-delay: .08s; }
+.is-loaded .fade:nth-child(3) { transition-delay: .16s; }
+.is-loaded .fade:nth-child(4) { transition-delay: .24s; }
+.is-loaded .hero-img img { opacity: 1; transform: none; transition: opacity 1.2s var(--ease), transform 2s var(--ease); }
+.is-loaded .giant--hero { opacity: 1; transform: none; transition: opacity 1s .2s, transform 1.4s .2s var(--ease); }
+
+/* ---------- prijzen ---------- */
+.scissors {
+  position: absolute; z-index: 0; pointer-events: none;
+  top: -60px; right: -30vw; height: 400px; aspect-ratio: 2 / 5;
+  --th: 8;
+}
+.scissors svg { width: 100%; height: 100%; overflow: visible; }
+.scissors svg * { vector-effect: non-scaling-stroke; }
+.sc-lines { fill: #fff; stroke: var(--ink); stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round; }
+.sc-a, .sc-b { transform-box: view-box; transform-origin: 196px 580px; }
+.sc-a { transform: rotate(calc(var(--th) * -1deg)); }
+.sc-b { transform: rotate(calc(var(--th) * 1deg)); }
+.sc-dot { fill: var(--ink); stroke: none; }
+
+.prices-in { position: relative; z-index: 1; }
+.prices-head p { max-width: 28em; color: var(--ink-2); }
+.price-cols { display: grid; gap: 44px; margin-top: 48px; }
+.price-group ul { border-top: 1px solid var(--ink); }
+.price-group li { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.price-group li span { font-size: 15px; }
+.price-group b { font: 400 30px/1 var(--f-head); white-space: nowrap; letter-spacing: .01em; }
+.price-group b small { font: 600 11px/1 var(--f-body); letter-spacing: .06em; color: var(--muted); margin-right: 6px; vertical-align: 4px; }
+.price-group b.txt { font: 600 13px/1.3 var(--f-body); letter-spacing: 0; }
+.price-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+
+/* ---------- salon ---------- */
+.giant--year {
+  position: absolute; z-index: 0; top: 2%; right: -6vw;
+  font-size: 46vw; color: transparent; -webkit-text-stroke: 1.5px #d6d3cc;
+}
+.salon-in { position: relative; z-index: 1; display: grid; gap: 36px; align-items: end; }
+.salon-portrait { max-width: 396px; }
+.salon-portrait img { width: 100%; }
+.salon-copy p { color: var(--ink-2); max-width: 34em; }
+.salon-imgs { position: relative; z-index: 1; display: grid; gap: 24px; margin-top: 56px; }
+.salon-imgs img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; }
+.salon-imgs figure:last-child img { filter: grayscale(1) contrast(1.05); }
+figcaption { margin-top: 10px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- producten ---------- */
+.products { background: var(--soft); padding: 0; }
+.products-grid { display: grid; }
+.deo-stage { position: relative; height: 78svh; min-height: 460px; overflow: hidden; }
+/* platte cirkel in het roze van het Loveli-hartje */
+.deo-stage::before {
+  content: ''; position: absolute; left: 50%; top: 50%; width: min(84%, 64svh); aspect-ratio: 1;
+  border-radius: 50%; background: #f2c9c3; transform: translate(-50%, -50%);
+}
+.deo-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.deo-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; padding: 16%; transform: rotate(14deg); }
+.deo-stage.is-3d .deo-fallback { display: none; }
+.products-copy { padding: 8px var(--gut) clamp(88px, 11vw, 160px); max-width: 640px; }
+.products-copy .lead { font-size: clamp(17px, 1.4vw, 19px); color: var(--ink-2); margin-bottom: 40px; }
+.brand { padding: 26px 0; border-top: 1px solid var(--ink); }
+.brand + .brand { border-top-color: var(--line); }
+.brand p { color: var(--ink-2); margin-bottom: 12px; }
+.brand-logo { width: 104px; height: auto; margin-bottom: 14px; }
+.brand-name { font: 400 38px/1 var(--f-head); letter-spacing: .01em; text-transform: none; color: var(--ink); margin-bottom: 12px; }
+
+/* ---------- green circle ---------- */
+.green { background: var(--moss); color: #fff; padding: clamp(28px, 4vw, 48px); margin-top: 56px; display: grid; gap: 10px; }
+.green h3 { color: rgba(255,255,255,.75); margin: 0; }
+.green p { color: rgba(255,255,255,.9); max-width: 46em; margin: 0; }
+
+/* ---------- contact ---------- */
+.contact { display: grid; gap: 48px; }
+.contact-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 8px 0 26px; }
+.contact-cols p { margin-bottom: 10px; }
+.contact-cols a:not(.link) { text-decoration: none; }
+.contact-cols a:not(.link):hover { text-decoration: underline; }
+.route { color: var(--ink-2); max-width: 32em; }
+.hours { margin: 32px 0; }
+.hours table { width: 100%; border-collapse: collapse; border-top: 1px solid var(--ink); }
+.hours th, .hours td { padding: 11px 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; vertical-align: top; }
+.hours td { text-align: right; font-variant-numeric: tabular-nums; }
+.hours td small { display: block; font-size: 12px; color: var(--muted); }
+.hours tr.is-today th, .hours tr.is-today td { font-weight: 600; }
+.hours tr.is-today th::after { content: ' (vandaag)'; font-weight: 400; color: var(--muted); }
+.contact-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.map { position: relative; min-height: 360px; background: var(--soft); }
+.map-fallback { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 10px; text-align: center; }
+.map-fallback p { margin: 0; }
+.map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: grayscale(1) contrast(1.05); }
+
+/* ---------- footer ---------- */
+.ftr { display: flow-root; position: relative; overflow: clip; border-top: 1px solid var(--line); padding-top: 56px; }
+.ftr-in { display: grid; gap: 24px; }
+.ftr-meta p { margin: 0 0 8px; font-size: 14px; color: var(--muted); }
+.ftr-meta a { text-decoration: none; color: var(--ink); }
+.giant--foot {
+  font-size: 23vw; color: var(--soft); margin: 40px 0 calc(72px - 4vw) -1.5vw;
+}
+
+/* mobiele actiebalk */
+.dock {
+  position: fixed; z-index: 40; left: 0; right: 0; bottom: 0;
+  display: grid; grid-template-columns: 1fr 2fr;
+  padding: 10px var(--gut) calc(10px + env(safe-area-inset-bottom)); gap: 10px;
+  background: rgba(255,255,255,.96); border-top: 1px solid var(--line);
+  transform: translateY(105%); transition: transform .45s var(--ease);
+}
+.dock.is-on { transform: none; }
+.dock a { display: flex; align-items: center; justify-content: center; min-height: 48px; font-weight: 600; font-size: 14px; text-decoration: none; border: 1px solid var(--line); }
+.dock .dock-book { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* reveal */
+.js [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+
+@media (min-width: 640px) {
+  .salon-imgs { grid-template-columns: 1fr 1fr; }
+  .price-cols { grid-template-columns: 1fr 1fr; gap: 48px 40px; }
+  .price-cta { grid-column: 1 / -1; }
+}
+
+@media (min-width: 960px) {
+  :root { --hdr-h: 80px; }
+  .hdr-nav { display: flex; }
+  .hdr-r .btn { display: inline-flex; }
+  .hdr .logo img { height: 24px; }
+  .burger, .menu, .dock { display: none; }
+  .giant--foot { margin-bottom: -5.5vw; }
+
+  .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: space-between; padding-top: calc(var(--hdr-h) + 20px); }
+  .hero-top { display: grid; grid-template-columns: 1fr 38vw; gap: 48px; align-items: start; padding-top: 2vh; }
+  .hero-copy, .hero-img { grid-area: auto; }
+  .hero-copy { padding: 10vh 0 0; }
+  .hero-copy .cap { display: block; margin-bottom: 24px; }
+  .btn--lg { flex: 0 0 auto; min-height: 64px; padding: 0 44px; font-size: 17px; }
+  .hero-img { height: min(66vh, 52vw); }
+  .giant--hero { font-size: 31vw; margin-top: -13vw; margin-left: 2.5vw; }
+  .intro-grid { grid-template-columns: repeat(4, 1fr); }
+  .intro-grid > div { padding: 26px 24px 26px 0; border-bottom: 0; }
+  .intro-grid > div + div { padding-left: 24px; border-left: 1px solid var(--line); }
+
+  .scissors { right: auto; left: -9vw; top: -6%; height: 112%; }
+  .prices-in { padding-left: max(var(--gut), 34vw); }
+
+  .salon-in { grid-template-columns: 396px 1fr; gap: clamp(48px, 7vw, 112px); }
+  .salon-copy { padding-bottom: 12px; }
+
+  .products-grid { grid-template-columns: 1.15fr 1fr; align-items: start; }
+  .deo-stage { position: sticky; top: 0; height: 100svh; }
+  .deo-stage::before { width: min(78%, 66svh); }
+  .products-copy { padding: 26vh var(--gut) 30vh 0; max-width: 560px; }
+
+  .green { grid-template-columns: 1fr 2.4fr; gap: 48px; align-items: baseline; }
+
+  .contact { grid-template-columns: 1fr 1fr; gap: clamp(48px, 6vw, 96px); align-items: stretch; }
+
+  .ftr-in { grid-template-columns: auto 1fr; align-items: end; }
+  .ftr-meta { justify-self: end; text-align: right; }
+}
+
+@media (min-width: 1200px) {
+  .hdr-tel { display: inline; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .001ms !important; transition-delay: 0s !important; animation: none !important; }
+  .js .fade, .js [data-reveal], .js .hero-img img, .js .giant--hero { opacity: 1; transform: none; }
+}
