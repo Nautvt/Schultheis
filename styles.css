@@ -131,16 +131,17 @@ h3 { font: 600 12px/1.2 var(--f-body); letter-spacing: .16em; text-transform: up
   grid-area: word; position: relative; z-index: 2;
   font-size: 37vw; margin: -18vw 0 0 1.5vw; padding-bottom: .04em; color: var(--ink);
 }
-.hero-copy { grid-area: copy; padding: 18px var(--gut) 28px; }
+.hero-copy { grid-area: copy; padding: 18px var(--gut) 28px; container-type: inline-size; }
 .hero-copy .cap { display: none; }
-.hero-btns { display: grid; gap: 10px; }
+/* De lettergrootte volgt de breedte van de kolom, zodat 'Afspraak maken' altijd past */
+.hero-btns { display: grid; gap: 10px; font-size: clamp(26px, 8.5vw, 64px); font-size: clamp(26px, 11.6cqi, 76px); }
 
 /* Grote knoppen in het logofont, met een hover die vult en de tekst laat doorrollen */
 .bigbtn {
   position: relative; isolation: isolate; overflow: hidden;
   display: flex; align-items: center; justify-content: space-between; gap: .4em;
   padding: .3em .42em .26em .5em;
-  font: 400 clamp(34px, 4.6vw, 76px)/1 var(--f-head); letter-spacing: .01em; text-transform: uppercase;
+  font: 400 1em/1 var(--f-head); letter-spacing: .01em; text-transform: uppercase;
   text-decoration: none; white-space: nowrap;
 }
 .bigbtn::before {
@@ -153,7 +154,7 @@ h3 { font: 600 12px/1.2 var(--f-body); letter-spacing: .16em; text-transform: up
 .bigbtn--line::before { background: var(--ink); }
 .bigbtn:hover::before, .bigbtn:focus-visible::before { transform: scaleY(1); }
 .bigbtn--line:hover, .bigbtn--line:focus-visible { color: #fff; }
-.roll { position: relative; display: block; overflow: hidden; padding-top: .04em; }
+.roll { position: relative; display: block; flex: none; overflow: hidden; padding-top: .04em; }
 .roll > span, .roll::after { display: block; transition: transform .55s var(--ease); }
 .roll::after { content: attr(data-text); position: absolute; left: 0; top: 100%; padding-top: .04em; }
 .bigbtn:hover .roll > span, .bigbtn:hover .roll::after,
@@ -313,12 +314,11 @@ figcaption { margin-top: 10px; font-size: 12px; letter-spacing: .14em; text-tran
   .giant--foot { margin-bottom: -5.5vw; }
 
   .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: space-between; padding-top: calc(var(--hdr-h) + 20px); }
-  .hero-top { display: grid; grid-template-columns: 1fr 38vw; gap: 48px; align-items: start; padding-top: 2vh; }
+  .hero-top { display: grid; grid-template-columns: 1fr min(38vw, 600px); gap: 48px; align-items: start; padding-top: 2vh; }
   .hero-copy, .hero-img { grid-area: auto; }
   .hero-copy { padding: 10vh 0 0; }
   .hero-copy .cap { display: block; margin-bottom: 24px; }
-  .hero-btns { width: min(100%, 9.6em); font-size: clamp(34px, 4.6vw, 76px); }
-  .bigbtn { font-size: inherit; }
+  .hero-btns { font-size: clamp(26px, 3.4vw, 76px); font-size: clamp(26px, 11.6cqi, 76px); }
   .hero-img { height: min(66vh, 52vw); }
   .giant--hero { font-size: 31vw; margin-top: -13vw; margin-left: 2.5vw; }
   .intro-grid { grid-template-columns: repeat(4, 1fr); }
