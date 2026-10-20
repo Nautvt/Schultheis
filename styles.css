@@ -133,8 +133,35 @@ h3 { font: 600 12px/1.2 var(--f-body); letter-spacing: .16em; text-transform: up
 }
 .hero-copy { grid-area: copy; padding: 18px var(--gut) 28px; }
 .hero-copy .cap { display: none; }
-.hero-btns { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
-.btn--lg { min-height: 58px; padding: 0 34px; font-size: 16px; flex: 1 1 100%; }
+.hero-btns { display: grid; gap: 10px; }
+
+/* Grote knoppen in het logofont, met een hover die vult en de tekst laat doorrollen */
+.bigbtn {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; align-items: center; justify-content: space-between; gap: .4em;
+  padding: .3em .42em .26em .5em;
+  font: 400 clamp(34px, 4.6vw, 76px)/1 var(--f-head); letter-spacing: .01em; text-transform: uppercase;
+  text-decoration: none; white-space: nowrap;
+}
+.bigbtn::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  transform: scaleY(0); transform-origin: 50% 100%; transition: transform .55s var(--ease);
+}
+.bigbtn--solid { background: var(--ink); color: #fff; }
+.bigbtn--solid::before { background: var(--moss); }
+.bigbtn--line { color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); transition: color .35s var(--ease); }
+.bigbtn--line::before { background: var(--ink); }
+.bigbtn:hover::before, .bigbtn:focus-visible::before { transform: scaleY(1); }
+.bigbtn--line:hover, .bigbtn--line:focus-visible { color: #fff; }
+.roll { position: relative; display: block; overflow: hidden; padding-top: .04em; }
+.roll > span, .roll::after { display: block; transition: transform .55s var(--ease); }
+.roll::after { content: attr(data-text); position: absolute; left: 0; top: 100%; padding-top: .04em; }
+.bigbtn:hover .roll > span, .bigbtn:hover .roll::after,
+.bigbtn:focus-visible .roll > span, .bigbtn:focus-visible .roll::after { transform: translateY(-100%); }
+.bigbtn-ico { flex: none; width: .5em; height: .5em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .55s var(--ease); }
+.bigbtn--solid:hover .bigbtn-ico { transform: translateX(.12em); }
+.bigbtn--line .bigbtn-ico { stroke-width: 1.6; }
+.bigbtn--line:hover .bigbtn-ico { transform: rotate(-12deg); }
 
 /* in één oogopslag */
 .intro { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -290,7 +317,8 @@ figcaption { margin-top: 10px; font-size: 12px; letter-spacing: .14em; text-tran
   .hero-copy, .hero-img { grid-area: auto; }
   .hero-copy { padding: 10vh 0 0; }
   .hero-copy .cap { display: block; margin-bottom: 24px; }
-  .btn--lg { flex: 0 0 auto; min-height: 64px; padding: 0 44px; font-size: 17px; }
+  .hero-btns { width: min(100%, 9.6em); font-size: clamp(34px, 4.6vw, 76px); }
+  .bigbtn { font-size: inherit; }
   .hero-img { height: min(66vh, 52vw); }
   .giant--hero { font-size: 31vw; margin-top: -13vw; margin-left: 2.5vw; }
   .intro-grid { grid-template-columns: repeat(4, 1fr); }
